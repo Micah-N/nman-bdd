@@ -1,0 +1,105 @@
+{
+	"variables": [],
+	"info": {
+		"name": "BDD API",
+		"_postman_id": "dde6fcac-fa13-cbe2-fe42-9851094e7739",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Install Postman BDD to use Chai-style assertions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// Install Postman BDD",
+							"postman.setGlobalVariable('postmanBDD', responseBody);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET request using Postman BDD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// Load Postman BDD",
+							"eval(globals.postmanBDD);",
+							"",
+							"describe('Check user info', () => {",
+							"    it('should return user data', () => {",
+							"        response.should.have.status(200)",
+							"        response.should.be.json",
+							"        response.should.not.be.empty",
+							"    })",
+							"    ",
+							"    it('should have a full name', () => {",
+							"        var user = response.body.results[0]",
+							"        user.name.should.be.an('object')",
+							"        user.name.should.have.property('first').and.not.be.empty",
+							"        user.name.should.have.property('last').and.not.be.empty",
+							"    })",
+							"    ",
+							"    it('should have an address', () => {",
+							"        var user = response.body.results[0]",
+							"        user.location.should.be.an('object')",
+							"        user.location.should.have.property('street').and.not.be.empty",
+							"        user.location.should.have.property('city').and.not.be.empty",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "https://randomuser.me/api/?nat=us&gender=female",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					],
+					"query": [
+						{
+							"key": "nat",
+							"value": "us",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "gender",
+							"value": "female",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
